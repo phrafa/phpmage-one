@@ -9,6 +9,10 @@ RUN docker-php-ext-install mcrypt
 # BCMATH
 RUN docker-php-ext-install bcmath && docker-php-ext-enable bcmath
 
+#SOAP
+RUN apt-get install -y libxml2-dev && \
+    docker-php-ext-install soap
+
 # MYSQL
 RUN docker-php-ext-install pdo pdo_mysql mysql
 
@@ -34,6 +38,8 @@ RUN dpkg-reconfigure locales && \
 # Install needed default locale for Makefly
 RUN echo 'en_US.UTF-8 UTF-8' >> /etc/locale.gen && \
   locale-gen
+
+RUN apt-get install git -y
 
 # Set default locale for the environment
 ENV LC_ALL C.UTF-8
