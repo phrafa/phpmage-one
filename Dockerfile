@@ -24,7 +24,8 @@ RUN docker-php-ext-install gd
 RUN pecl install xdebug-2.5.5 && docker-php-ext-enable xdebug
 
 # COMPOSER
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
+    composer global require hirak/prestissimo
 
 # COMPASS
 RUN apt-get install -y ruby-compass
