@@ -16,6 +16,9 @@ RUN apt-get install -y libxml2-dev && \
 # MYSQL
 RUN docker-php-ext-install pdo pdo_mysql mysql
 
+# ZIP
+RUN apt-get install -y zlib1g-dev zip && docker-php-ext-install zip
+
 # GD
 RUN apt-get update -y && apt-get install -y sendmail libpng-dev
 RUN docker-php-ext-install gd
@@ -23,8 +26,12 @@ RUN docker-php-ext-install gd
 # XDEBUG
 RUN pecl install xdebug-2.5.5 && docker-php-ext-enable xdebug
 
+# GIT
+RUN apt-get install git -y
+
 # COMPOSER
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
+    composer global require hirak/prestissimo
 
 # COMPASS
 RUN apt-get install -y ruby-compass
@@ -38,8 +45,6 @@ RUN dpkg-reconfigure locales && \
 # Install needed default locale for Makefly
 RUN echo 'en_US.UTF-8 UTF-8' >> /etc/locale.gen && \
   locale-gen
-
-RUN apt-get install git -y
 
 # Set default locale for the environment
 ENV LC_ALL C.UTF-8
