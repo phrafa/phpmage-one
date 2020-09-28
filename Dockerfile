@@ -29,6 +29,8 @@ RUN pecl install xdebug-2.5.5 && docker-php-ext-enable xdebug
 # GIT
 RUN apt-get install git -y
 
+COPY ./php.ini /usr/local/etc/php/conf.d/custom.ini
+
 # COMPOSER
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
     composer global require hirak/prestissimo
